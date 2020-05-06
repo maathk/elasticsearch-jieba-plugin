@@ -1,0 +1,22 @@
+image: gradle:6.3.0-jdk11
+
+stages:
+  - build
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  stage: build
+  script:
+    - gradle pz --no-daemon
+  artifacts:
+    paths:
+      - build/distributions/*.zip
+  only:
+    - master
